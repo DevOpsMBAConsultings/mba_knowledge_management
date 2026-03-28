@@ -5,6 +5,7 @@ import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";
 import { useDebounced } from "@web/core/utils/timing";
+import { rpc } from "@web/core/network/rpc";
 
 export class KnowledgeSplit extends Component {
     static template = "mba_knowledge_management.KnowledgeSplit";
@@ -27,8 +28,21 @@ export class KnowledgeSplit extends Component {
             this.session = this.env.session || window.odoo?.session_info || { uid: this.user?.userId };
         }
 
-        this.rpc = useService("rpc");
-        this.action = useService("action");
+        try {
+            this.rpc = useService("rpc");
+        } catch (e) {
+            console.warn("RPC service not available, using core network rpc import.");
+            this.rpc = rpc;
+        }
+
+        try {
+            this.action = useService("action");
+        } catch (e) {
+            console.warn("Action service not available, providing a dummy stub.");
+            this.action = this.env.services.action || {
+                doAction: (actionParams, options) => console.warn("Cannot do action without Action service", actionParams)
+            };
+        }
 
         this.root = useRef("root-template");
         this.splitter = useRef("splitter");
