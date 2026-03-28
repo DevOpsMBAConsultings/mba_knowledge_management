@@ -19,7 +19,14 @@ export class KnowledgeSplit extends Component {
             console.warn("User service not available, falling back to session/env.");
             this.user = this.env.services.user || { userId: this.env.session?.uid };
         }
-        this.session = useService("session");
+        
+        try {
+            this.session = useService("session");
+        } catch (e) {
+            console.warn("Session service not available, falling back to window.odoo.session.");
+            this.session = this.env.session || window.odoo?.session_info || { uid: this.user?.userId };
+        }
+
         this.rpc = useService("rpc");
         this.action = useService("action");
 
