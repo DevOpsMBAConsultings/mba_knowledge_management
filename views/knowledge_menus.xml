@@ -15,25 +15,25 @@
               sequence="20"/>
 
     <!-- Tree View Action for Articles (No Create) -->
-    <record id="action_article_tree_readonly" model="ir.actions.act_window">
+    <record id="action_article_list_readonly" model="ir.actions.act_window">
         <field name="name">Articles</field>
         <field name="res_model">knowledge.article</field>
-        <field name="view_mode">tree,form</field>
-        <field name="views" eval="[(ref('view_knowledge_article_tree'), 'tree'), (ref('view_knowledge_article_form'), 'form')]"/>
+        <field name="view_mode">list,form</field>
+        <field name="views" eval="[(ref('view_knowledge_article_list'), 'list'), (ref('view_knowledge_article_form'), 'form')]"/>
     </record>
 
     <!-- Menu for Article List -->
     <menuitem id="menu_knowledge_articles"
               name="Articles"
               parent="menu_knowledge_configuration"
-              action="action_article_tree_readonly"
+              action="action_article_list_readonly"
               sequence="20"/>
 
     <record id="action_compare_selected_versions" model="ir.actions.server">
         <field name="name">Compare Selected Versions</field>
         <field name="model_id" ref="model_knowledge_article_version"/>
         <field name="binding_model_id" ref="model_knowledge_article_version"/>
-        <field name="binding_view_types">tree</field>
+        <field name="binding_view_types">list</field>
         <field name="state">code</field>
         <field name="code">action = records[0].action_compare_selected_versions(records)</field>
     </record>
@@ -41,7 +41,7 @@
     <record id="action_knowledge_article_full" model="ir.actions.act_window">
         <field name="name">Articles</field>
         <field name="res_model">knowledge.article</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_knowledge_article_form"/>
     </record>
 
@@ -56,7 +56,7 @@
     <record id="action_knowledge_tags" model="ir.actions.act_window">
         <field name="name">Tags</field>
         <field name="res_model">knowledge.tag</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{}</field>
     </record>
 

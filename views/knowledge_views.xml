@@ -5,17 +5,17 @@
         <field name="tag">knowledge_split_client</field>
     </record>
 
-    <record id="view_knowledge_article_tree" model="ir.ui.view">
-        <field name="name">knowledge.article.tree</field>
+    <record id="view_knowledge_article_list" model="ir.ui.view">
+        <field name="name">knowledge.article.list</field>
         <field name="model">knowledge.article</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name"/>
                 <field name="parent_id"/>
                 <field name="author_id"/>
                 <field name="is_published"/>
                 <field name="create_date"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -91,11 +91,11 @@
         </field>
     </record>
 
-    <record id="view_knowledge_article_version_tree" model="ir.ui.view">
-        <field name="name">knowledge.article.version.tree</field>
+    <record id="view_knowledge_article_version_list" model="ir.ui.view">
+        <field name="name">knowledge.article.version.list</field>
         <field name="model">knowledge.article.version</field>
         <field name="arch" type="xml">
-            <tree string="Article Versions" default_order="create_date desc"
+            <list string="Article Versions" default_order="create_date desc"
                   multi_edit="false" create="false">
                 <field name="version_number"/>
                 <field name="article_id"/>
@@ -106,7 +106,7 @@
                         type="object"
                         icon="fa-exchange-alt"
                         class="btn-link"/>
-            </tree>
+            </list>
         </field>
     </record>
 

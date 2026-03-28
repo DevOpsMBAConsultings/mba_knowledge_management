@@ -1,5 +1,6 @@
 from odoo import models, fields, api, exceptions
 from odoo.exceptions import UserError
+from odoo.tools import html2plaintext
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -93,11 +94,9 @@ class KnowledgeVersionCompareWizard(models.TransientModel):
     def _generate_diff_html(self, old, new, old_num=None, new_num=None):
         try:
             import difflib
-            from bs4 import BeautifulSoup
 
             def strip_html(raw_html):
-                soup = BeautifulSoup(raw_html or '', "html.parser")
-                return soup.get_text()
+                return html2plaintext(raw_html or '')
 
             old_text = strip_html(old)
             new_text = strip_html(new)

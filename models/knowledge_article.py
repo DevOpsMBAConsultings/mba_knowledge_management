@@ -1,6 +1,6 @@
 from odoo import models, fields, api, exceptions,_
 from odoo.exceptions import UserError
-from bs4 import BeautifulSoup
+from odoo.tools import html_sanitize
 import uuid
 
 class KnowledgeArticle(models.Model):
@@ -245,7 +245,7 @@ class KnowledgeArticle(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Version History',
             'res_model': 'knowledge.article.version',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [('article_id', '=', self.id)],
             'context': {'default_article_id': self.id},
             'target': 'current',
@@ -273,11 +273,11 @@ class KnowledgeArticle(models.Model):
             ]).id
 
     def clean_article_content(self, html):
-        soup = BeautifulSoup(html or "", "html.parser")
-        for img in soup.find_all("img"):
-            if img.get("src", "").startswith("file://"):
-                img.decompose()
-        return str(soup)
+        """
+        Clean the HTML content. Odoo's html_sanitize handles most security
+        and cleanup tasks. We keep it consistent with Odoo standards.
+        """
+        return html_sanitize(html or "")
 
     @api.model
     def _check_read(self, article_id):
